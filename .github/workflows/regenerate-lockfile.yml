@@ -35,11 +35,15 @@ jobs:
       - name: Verify action checksums
         uses: chains-project/maven-lockfile/.github/actions/ghasum@c8ab8e4739f34b397457c22da0d80e7a14f75476 # 5.14.2
 
-      - name: Regenerate lockfile
-        uses: chains-project/maven-lockfile@c8ab8e4739f34b397457c22da0d80e7a14f75476 # 5.14.2
+      - name: Set up JDK 17
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
         with:
-          github-token: ${{ github.token }}
-          commit-lockfile: false
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Regenerate lockfile
+        run: mvn io.github.chains-project:maven-lockfile:5.14.2:generate -DincludeMavenPlugins=true -q
 
       - name: Check for lockfile changes
         id: changes
