@@ -43,7 +43,7 @@ jobs:
           cache: maven
 
       - name: Regenerate lockfile
-        run: mvn io.github.chains-project:maven-lockfile:5.14.2:generate -DincludeMavenPlugins=true -q
+        run: mvn io.github.chains-project:maven-lockfile:5.14.2:generate -DincludeMavenPlugins=true -DincludeEnvironment=false -q
 
       - name: Check for lockfile changes
         id: changes
