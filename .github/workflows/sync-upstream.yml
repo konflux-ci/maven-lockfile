@@ -60,7 +60,8 @@ jobs:
         id: branch
         run: |
           BRANCH="sync/upstream-$(date +%Y%m%d-%H%M)"
-          git checkout -b $BRANCH upstream/main
+          git checkout -b $BRANCH origin/main
+          git merge upstream/main --ff-only
           git push origin $BRANCH
           echo "name=$BRANCH" >> $GITHUB_OUTPUT
 
