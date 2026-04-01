@@ -14,65 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-
-      - name: Checkout fork main
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          ref: main
-          fetch-depth: 0
-          token: ${{ secrets.SYNC_TOKEN }}
-
-      - name: Configure git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Add upstream remote
-        run: git remote add upstream https://github.com/chains-project/maven-lockfile.git
-
-      - name: Fetch upstream main
-        run: git fetch upstream main
-
-      - name: Check if sync is needed
-        id: check
-        run: |
-          LOCAL=$(git rev-parse HEAD)
-          UPSTREAM=$(git rev-parse upstream/main)
-          if [ "$LOCAL" = "$UPSTREAM" ]; then
-            echo "needed=false" >> $GITHUB_OUTPUT
-            echo "Fork main is already up to date with upstream."
-          else
-            echo "needed=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create sync branch
-        if: steps.check.outputs.needed == 'true'
-        id: branch
-        run: |
-          BRANCH="sync/upstream-$(date +%Y%m%d-%H%M)"
-          git checkout -b $BRANCH origin/main
-          git merge upstream/main --ff-only
-          git push origin $BRANCH
-          echo "name=$BRANCH" >> $GITHUB_OUTPUT
-
-      - name: Create pull request and enable auto-merge
-        if: steps.check.outputs.needed == 'true'
+      - name: Sync fork with upstream
         env:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          PR_URL=$(gh pr create \
-            --base main \
-            --head "${{ steps.branch.outputs.name }}" \
-            --title "chore: sync with upstream $(date +%Y-%m-%d)" \
-            --body "Automated sync with [chains-project/maven-lockfile](https://github.com/chains-project/maven-lockfile) upstream main branch.")
-          gh pr merge "$PR_URL" --auto --merge
+          gh api repos/${{ github.repository }}/merge-upstream \
+            --method POST \
+            --field branch=main
