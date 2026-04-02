@@ -6,6 +6,7 @@ on:
 jobs:
   ensure_release_notrunning:
     name: Ensure release action is not running
+    if: false # Disabled in fork — release workflows are not active
 
     runs-on: ubuntu-latest
 

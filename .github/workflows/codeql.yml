@@ -13,10 +13,10 @@ name: CodeQL
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop" ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: [ "develop" ]
   schedule:
     - cron: '45 1 * * 5'
 env:
@@ -82,7 +82,7 @@ jobs:
 
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
-          
+
       - name: build packages
         run: mvn -B  clean package
 
