@@ -111,6 +111,8 @@ public class LockFileFacade {
                         io.github.chains_project.maven_lockfile.graph.DependencyNode::getComparatorString))));
         var pom = constructRecursivePom(project, checksumCalculator);
         var boms = resolveBoms(graph, session, project, checksumCalculator);
+        resolveBomsForDependencies(graph, session, project, checksumCalculator);
+        var boms = resolveBoms(session, project, checksumCalculator);
 
         return new LockFile(
                 GroupId.of(project.getGroupId()),
@@ -272,6 +274,7 @@ public class LockFileFacade {
 
             DependencyGraph dependencyGraph = DependencyGraph.of(graph, checksumCalculator, false);
 
+            resolveBomsForDependencies(dependencyGraph, session, project, checksumCalculator);
             // Get root dependency nodes (excluding the plugin project itself)
             Set<io.github.chains_project.maven_lockfile.graph.DependencyNode> roots = dependencyGraph.getRoots();
             PluginLogManager.getLog()
@@ -319,6 +322,7 @@ public class LockFileFacade {
             MavenProject initialProject, AbstractChecksumCalculator checksumCalculator) {
         String checksumAlgorithm = checksumCalculator.getChecksumAlgorithm();
 
+        BomResolver bomResolver = new BomResolver(session, initialProject.getRemoteArtifactRepositories(), checksumCalculator);
         List<MavenProject> recursiveProjects = new ArrayList<>();
         MavenProject currentProject = initialProject;
         recursiveProjects.add(currentProject);
@@ -359,6 +363,8 @@ public class LockFileFacade {
                 checksum = checksumCalculator.calculatePomChecksum(
                         project.getFile().toPath());
             }
+
+            Set<Pom> boms = bomResolver.resolveForProject(project);
             lastPom = new Pom(
                     GroupId.of(project.getGroupId()),
                     ArtifactId.of(project.getArtifactId()),
@@ -369,28 +375,63 @@ public class LockFileFacade {
                     checksumAlgorithm,
                     checksum,
                     lastPom);
+            if(!boms.isEmpty()) {
+                lastPom.setBoms(boms);
+            }
         }
 
         return lastPom;
     }
 
     /**
-     * Resolve the BOM POMs for the current project and its dependencies.
+     * Resolve the BOM POMs for the current project's dependencies.
      *
-     * Note that this function will mutate the graph nodes by adding to each one the list of resolved BOMs.
-     *
-     * @param graph The dependency graph
+     * @param graph The dependency graph for the project
      * @param session The Maven session
-     * @param project The current Maven project
+     * @param rootProject The current Maven project (for repository configuration)
      * @param checksumCalculator The checksum calculator
+     * @return A set of BOM POMs
      */
-    private static Set<Pom> resolveBoms(
+    private static void resolveBomsForDependencies(
             DependencyGraph graph,
             MavenSession session,
-            MavenProject project,
+            MavenProject rootProject,
             AbstractChecksumCalculator checksumCalculator) {
-        BomResolver resolver = new BomResolver(session, project.getRemoteArtifactRepositories(), checksumCalculator);
-        resolver.resolveBomsForDependencies(graph);
-        return resolver.resolveForProject(project);
+        ProjectBuilder projectBuilder = new ProjectBuilder(session, rootProject.getRemoteArtifactRepositories());
+        BomResolver bomResolver =
+                new BomResolver(session, rootProject.getRemoteArtifactRepositories(), checksumCalculator);
+
+        graph.getDependencySet().forEach(node -> {
+            var projectOptional = projectBuilder.buildFromGav(
+                    node.getGroupId().getValue(),
+                    node.getArtifactId().getValue(),
+                    node.getVersion().getValue());
+
+            if (projectOptional.isEmpty()) {
+                PluginLogManager.getLog().warn(String.format("Skipping BOM resolution for %s", node));
+                return;
+            }
+
+            Set<Pom> boms = bomResolver.resolveForProject(projectOptional.get());
+
+            if (!boms.isEmpty()) {
+                node.setBoms(boms);
+            }
+        });
+    }
+
+    /**
+     * Resolve the BOM POMs for the current project.
+     *
+     * @param session The Maven session
+     * @param rootProject The current Maven project (for repository configuration)
+     * @param checksumCalculator The checksum calculator
+     * @return A set of BOM POMs
+     */
+    private static Set<Pom> resolveBoms(
+            MavenSession session, MavenProject rootProject, AbstractChecksumCalculator checksumCalculator) {
+        BomResolver bomResolver =
+                new BomResolver(session, rootProject.getRemoteArtifactRepositories(), checksumCalculator);
+        return bomResolver.resolveForProject(rootProject);
     }
 }
