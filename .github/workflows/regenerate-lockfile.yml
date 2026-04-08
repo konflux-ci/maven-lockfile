@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   check-lockfile:
-    if: false
+    if: false # Disabled in fork — not publishing releases
     permissions:
       contents: write
       pull-requests: write
