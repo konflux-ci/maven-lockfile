@@ -10,6 +10,7 @@ jobs:
   check-lockfile:
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
@@ -29,6 +30,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
 
       - name: Verify action checksums
         uses: chains-project/maven-lockfile/.github/actions/ghasum@cc08dd5de9bb2f9888b72a4ca967023df84bc0ed # 5.15.0
@@ -36,5 +39,33 @@ jobs:
       - name: run maven-lockfile
         uses: chains-project/maven-lockfile@cc08dd5de9bb2f9888b72a4ca967023df84bc0ed # 5.15.0
         with:
-          github-token: ${{ secrets.JRELEASER_GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
           include-maven-plugins: true
+          commit-lockfile: false
+
+      - name: Check for lockfile changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR with updated lockfile
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="lockfile/update-$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b $BRANCH
+          git add lockfile.json maven_plugin/lockfile.json
+          git commit -m "chore: update lockfile"
+          git push origin $BRANCH
+          gh pr create \
+            --base develop \
+            --head "$BRANCH" \
+            --title "chore: update lockfile" \
+            --body "Automated lockfile update triggered by push to develop."
