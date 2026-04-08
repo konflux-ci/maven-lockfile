@@ -16,6 +16,7 @@ on:
 jobs:
   build:
     name: Build and release
+    if: false # Disabled in fork — not publishing releases
 
     permissions:
       id-token: write # For Sigstore signing (https://github.com/sigstore/sigstore-java/tree/main/sigstore-maven-plugin)

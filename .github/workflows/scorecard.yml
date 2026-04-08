@@ -20,6 +20,7 @@ permissions: read-all
 jobs:
   analysis:
     name: Scorecard analysis
+    if: false # Disabled in fork — scorecard measures upstream project posture, not the fork
     runs-on: ubuntu-latest
     permissions:
       # Needed to upload the results to code-scanning dashboard.
@@ -73,7 +74,7 @@ jobs:
           # For private repositories:
           #   - `publish_results` will always be set to `false`, regardless
           #     of the value entered here.
-          publish_results: true
+          publish_results: false
 
       # Upload the results as artifacts (optional). Commenting out will disable uploads of run results in SARIF
       # format to the repository Actions tab.

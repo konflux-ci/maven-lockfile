@@ -2,8 +2,10 @@ name: Beta Release
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 0' # Sundays at 00:00 (https://crontab.guru/#0_0_*_*_0)
+  # Schedule disabled in fork — runs from default branch (develop) and would
+  # attempt real Maven Central releases every Sunday.
+  # schedule:
+  #   - cron: '0 0 * * 0' # Sundays at 00:00 (https://crontab.guru/#0_0_*_*_0)
 
 permissions:
   contents: read
@@ -11,6 +13,7 @@ permissions:
 jobs:
   build:
     name: Build and release
+    if: false # Disabled in fork — not publishing releases
 
     permissions:
       id-token: write # For Sigstore signing (https://github.com/sigstore/sigstore-java/tree/main/sigstore-maven-plugin)
