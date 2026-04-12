@@ -1,21 +1,21 @@
 {
   "artifactId": "maven-lockfile",
   "groupId": "io.github.chains-project",
-  "version": "5.15.1-SNAPSHOT",
+  "version": "5.15.1-beta-1",
   "pom": {
     "groupId": "io.github.chains-project",
     "artifactId": "maven-lockfile",
-    "version": "5.15.1-SNAPSHOT",
+    "version": "5.15.1-beta-1",
     "relativePath": "pom.xml",
     "checksumAlgorithm": "SHA-256",
-    "checksum": "a8e7cc96c4bf0026d6ef83a1c930f24edd3322f49c999eb525ede22dac0d2318",
+    "checksum": "423c9e42499a784eab1d05b8f13f58888f17a3818d69f0a307084419e186acab",
     "parent": {
       "groupId": "io.github.chains-project",
       "artifactId": "maven-lockfile-parent",
-      "version": "5.15.1-SNAPSHOT",
+      "version": "5.15.1-beta-1",
       "relativePath": "../pom.xml",
       "checksumAlgorithm": "SHA-256",
-      "checksum": "18c33bbd0258a6d55775b12e997a8882e7a3e7c2b8d9486471aab636f702e0fe"
+      "checksum": "a3c7365defed865a9613dc83ca769c28d58aa434a709af213196876b14b55f1a"
     }
   },
   "lockFileVersion": 1,
@@ -2950,8 +2950,8 @@
       "groupId": "com.diffplug.spotless",
       "artifactId": "spotless-maven-plugin",
       "version": "3.1.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "1b0afe01920d8018b4396148df357915b1b95aeee82486debd51379b50683b8a",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/com/diffplug/spotless/spotless-maven-plugin/3.1.0/spotless-maven-plugin-3.1.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -3622,8 +3622,8 @@
       "groupId": "com.soebes.itf.jupiter.extension",
       "artifactId": "itf-maven-plugin",
       "version": "0.13.1",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "fdb31ad16c6e26c25c225463085f21f2d5caa82fb13d94907f4c58130fe26bc9",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/com/soebes/itf/jupiter/extension/itf-maven-plugin/0.13.1/itf-maven-plugin-0.13.1.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -4892,8 +4892,8 @@
       "groupId": "dev.sigstore",
       "artifactId": "sigstore-maven-plugin",
       "version": "2.0.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "f5578d8c6784707366c0c7704d22395a43f1f59439d3a5beea3e5fbfba3046d8",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/dev/sigstore/sigstore-maven-plugin/2.0.0/sigstore-maven-plugin-2.0.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -6641,8 +6641,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-artifact-plugin",
       "version": "3.6.1",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "e94e4d21eb073567e33e701b4680691e5a316d9beaa2dc05159c52dc9ea378f2",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-artifact-plugin/3.6.1/maven-artifact-plugin-3.6.1.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -9591,8 +9591,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-clean-plugin",
       "version": "3.5.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "a15977e3457ff8cd803c1a37e1e53aad76e4609cd23bbca8e8f783e5c78e5fa8",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/3.5.0/maven-clean-plugin-3.5.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -10895,8 +10895,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-compiler-plugin",
       "version": "3.14.1",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "85bc857c3bf91c87b65dfc15235154eb83b8f4539f0afbc7e6c93eb4a0bcdd38",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-compiler-plugin/3.14.1/maven-compiler-plugin-3.14.1.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -12551,8 +12551,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-deploy-plugin",
       "version": "3.1.4",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "3be1d369703884116300b57abda1c46b8c712faf9a3778960d21dd27af73b650",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-deploy-plugin/3.1.4/maven-deploy-plugin-3.1.4.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -13785,8 +13785,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-enforcer-plugin",
       "version": "3.6.2",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "88189ac3d0d2049ce9efabaf9895aee074f4eddb0f224defeb48c34ffe9d6fd8",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-enforcer-plugin/3.6.2/maven-enforcer-plugin-3.6.2.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -15423,8 +15423,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-failsafe-plugin",
       "version": "3.5.4",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "2dc83b91e8531820c04c3beed6d4a0939ee5c501d8373a2a8521a884f6a1fd0d",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-failsafe-plugin/3.5.4/maven-failsafe-plugin-3.5.4.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -17227,8 +17227,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-install-plugin",
       "version": "3.1.4",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "130c4b4ab3c81c5c2f6d0307091bcd363c1a266c4b20dd01c808ff2c15cb8350",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-install-plugin/3.1.4/maven-install-plugin-3.1.4.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -18508,8 +18508,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-jar-plugin",
       "version": "3.5.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "7562657fc3492649dee836ffdda07990aaf46f4133cad048c4dcd7330bfd3917",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-jar-plugin/3.5.0/maven-jar-plugin-3.5.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -20247,8 +20247,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-plugin-plugin",
       "version": "3.15.2",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "70a7217d1329d0697693724edd71ee20ff430eebcd98aa58ac7192d04aa0405b",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugin-plugin/3.15.2/maven-plugin-plugin-3.15.2.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -22903,8 +22903,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-resources-plugin",
       "version": "3.4.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "72c7d66ea49256ea64a82b28a15df69177d13066d12afeb4a1ee0616da4648f1",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-resources-plugin/3.4.0/maven-resources-plugin-3.4.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -24449,8 +24449,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-site-plugin",
       "version": "3.21.0",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "7b0e58afc5741b29c6dbbb1fab2f878149e63842bedb58ca839145c545951a7e",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.21.0/maven-site-plugin-3.21.0.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -29713,8 +29713,8 @@
       "groupId": "org.apache.maven.plugins",
       "artifactId": "maven-surefire-plugin",
       "version": "3.5.4",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "d25d73f73b70bfc85dcf949c9c58eaa9ecf79709dd8be19d6f92d72b8720dd61",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.5.4/maven-surefire-plugin-3.5.4.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -30355,8 +30355,8 @@
       "groupId": "org.codehaus.gmavenplus",
       "artifactId": "gmavenplus-plugin",
       "version": "4.2.1",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "85c43706d58864b7786a8a7fd5274e8301a0ce64adb9d78f782153a9934cdddf",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/codehaus/gmavenplus/gmavenplus-plugin/4.2.1/gmavenplus-plugin-4.2.1.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -32105,8 +32105,8 @@
       "groupId": "org.cyclonedx",
       "artifactId": "cyclonedx-maven-plugin",
       "version": "2.9.1",
-      "checksumAlgorithm": "SHA-256",
       "checksum": "698e0f37184a5b28c245c4065fd036dfce253b52f82fbb7113d81d36326cc249",
+      "checksumAlgorithm": "SHA-256",
       "resolved": "https://repo.maven.apache.org/maven2/org/cyclonedx/cyclonedx-maven-plugin/2.9.1/cyclonedx-maven-plugin-2.9.1.jar",
       "repositoryId": "central",
       "dependencies": [
@@ -33954,6 +33954,7 @@
       ]
     }
   ],
+  "mavenExtensions": [],
   "metaData": {
     "environment": {
       "osName": "Linux",
@@ -33967,7 +33968,7 @@
       "allowEnvironmentalValidationFailure": false,
       "includeEnvironment": true,
       "reduced": false,
-      "mavenLockfileVersion": "5.15.0",
+      "mavenLockfileVersion": "5.15.1-beta-1",
       "checksumMode": "local",
       "checksumAlgorithm": "SHA-256"
     }
