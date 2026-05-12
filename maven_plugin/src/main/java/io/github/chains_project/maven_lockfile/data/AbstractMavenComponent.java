@@ -1,9 +1,13 @@
 package io.github.chains_project.maven_lockfile.data;
 
+import io.github.chains_project.maven_lockfile.checksum.RepositoryInformation;
 import io.github.chains_project.maven_lockfile.graph.DependencyNode;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.DefaultArtifact;
+import org.apache.maven.artifact.handler.DefaultArtifactHandler;
 
 /**
  * Base class for Maven components (plugins, extensions) that share common metadata structure.
@@ -23,6 +27,7 @@ public abstract class AbstractMavenComponent implements Comparable<AbstractMaven
     protected final ResolvedUrl resolved;
     protected final RepositoryId repositoryId;
     protected final Set<DependencyNode> dependencies;
+    protected final Pom parentPom;
 
     protected AbstractMavenComponent(
             GroupId groupId,
@@ -32,7 +37,8 @@ public abstract class AbstractMavenComponent implements Comparable<AbstractMaven
             String checksumAlgorithm,
             ResolvedUrl resolved,
             RepositoryId repositoryId,
-            Set<DependencyNode> dependencies) {
+            Set<DependencyNode> dependencies,
+            Pom parentPom) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
@@ -41,6 +47,7 @@ public abstract class AbstractMavenComponent implements Comparable<AbstractMaven
         this.resolved = resolved;
         this.repositoryId = repositoryId;
         this.dependencies = dependencies == null ? Collections.emptySet() : dependencies;
+        this.parentPom = parentPom;
     }
 
     public GroupId getGroupId() {
@@ -75,10 +82,39 @@ public abstract class AbstractMavenComponent implements Comparable<AbstractMaven
         return dependencies;
     }
 
+    public Artifact toArtifact() {
+        final String scopeValue = null;
+        final String typeValue = "maven-plugin";
+        final String classifierValue = null;
+        return new DefaultArtifact(
+                groupId.getValue(),
+                artifactId.getValue(),
+                version.getValue(),
+                scopeValue,
+                typeValue,
+                classifierValue,
+                new DefaultArtifactHandler(typeValue));
+    }
+
+    public RepositoryInformation getRepositoryInformation() {
+        if (resolved != null && repositoryId != null) {
+            return new RepositoryInformation(resolved, repositoryId);
+        }
+        return RepositoryInformation.Unresolved();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(
-                groupId, artifactId, version, checksum, checksumAlgorithm, resolved, repositoryId, dependencies);
+                groupId,
+                artifactId,
+                version,
+                checksum,
+                checksumAlgorithm,
+                resolved,
+                repositoryId,
+                dependencies,
+                parentPom);
     }
 
     @Override
@@ -99,7 +135,8 @@ public abstract class AbstractMavenComponent implements Comparable<AbstractMaven
                 && Objects.equals(checksumAlgorithm, other.checksumAlgorithm)
                 && Objects.equals(resolved, other.resolved)
                 && Objects.equals(repositoryId, other.repositoryId)
-                && Objects.equals(dependencies, other.dependencies);
+                && Objects.equals(dependencies, other.dependencies)
+                && Objects.equals(parentPom, other.parentPom);
     }
 
     @Override
