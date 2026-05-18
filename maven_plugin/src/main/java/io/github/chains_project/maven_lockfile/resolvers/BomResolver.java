@@ -7,11 +7,13 @@ import io.github.chains_project.maven_lockfile.data.Pom;
 import io.github.chains_project.maven_lockfile.data.VersionNumber;
 import io.github.chains_project.maven_lockfile.graph.DependencyGraph;
 import io.github.chains_project.maven_lockfile.reporting.PluginLogManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
@@ -56,12 +58,15 @@ public class BomResolver {
             // A BOM POM always has type=pom and scope=import
             if ("pom".equals(dependency.getType()) && "import".equals(dependency.getScope())) {
                 var resolvedVersion = resolveVersionFromPlaceholder(dependency.getVersion(), project);
+                var resolvedGroupId = resolveVersionFromPlaceholder(dependency.getGroupId(), project);
+                var resolvedArtifactId = resolveVersionFromPlaceholder(dependency.getArtifactId(), project);
                 var bomProjectOptional = projectBuilder.buildFromGav(
-                        dependency.getGroupId(), dependency.getArtifactId(), resolvedVersion);
+                        resolvedGroupId, resolvedArtifactId, resolvedVersion);
 
                 if (bomProjectOptional.isEmpty()) {
-                    PluginLogManager.getLog().warn(String.format("Could not resolve BOM for %s", dependency));
-                    continue;
+                    PluginLogManager.getLog().error(String.format("Could not resolve BOM for %s", dependency));
+                    throw new RuntimeException("Error resolving BOM pom, fail fast");
+                    //continue;
                 }
 
                 var bomProject = bomProjectOptional.get();
@@ -116,6 +121,11 @@ public class BomResolver {
 
             if (resolvedVersion != null) {
                 return resolvedVersion;
+            }
+            if ("project.version".equals(propertyName)) {
+                return project.getVersion();
+            } else if ("project.groupId".equals(propertyName)) {
+                return project.getGroupId();
             }
         }
 
